@@ -25,19 +25,27 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.wildfly.swarm</groupId>
-        <artifactId>wildfly-swarm-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>package</id>
-          </execution>
-          <execution>
-            <id>start</id>
-          </execution>
-          <execution>
-            <id>stop</id>
-          </execution>
-        </executions>
+          <groupId>org.wildfly.plugins</groupId>
+          <artifactId>wildfly-maven-plugin</artifactId>
+          <version>1.2.0.Alpha2</version>
+          <executions>
+                    <execution>
+                        <id>start-wildfly</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start</goal>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>stop-wildfly</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>shutdown</goal>
+                        </goals>
+                    </execution>
+
+                </executions>
       </plugin>
     </plugins>
   </build>

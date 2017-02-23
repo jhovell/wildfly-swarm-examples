@@ -32,15 +32,14 @@ public class JAXRSApplicationIT extends AbstractIntegrationTest {
     WebDriver browser;
 
     @Test
-    @Ignore
     public void testIt() {
-        browser.navigate().to("http://localhost:8080/employees");
+        browser.navigate().to("http://localhost:8080/example-jaxrs-cdi/employees");
         assertThat(browser.getPageSource()).contains("{\"id\":1,\"name\":\"emp01\"}");
     }
     
     @Test
     public void testValid() throws IOException {
-        final String url = "http://localhost:8080/employees";
+        final String url = "http://localhost:8080/example-jaxrs-cdi/employees";
         final HttpPost post = new HttpPost(url);
         post.setEntity(new StringEntity("{ \"id\": 1, \"name\": null}"));
         post.setHeader("Content-Type", "application/json");
