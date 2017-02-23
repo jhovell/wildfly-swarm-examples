@@ -29,10 +29,8 @@ public class EmployeeController implements IEmployeeController {
     }
 
     public Employee postEmployee(final Employee employee) {
-        // We declare name as NotNull so it should not be possible to get here
-        if (employee.getName() == null) {
-            System.err.println("The name of the employee which should never be null: " + employee.getName());
-        }
+        // We declare name as NotNull so it should not be possible for name to be null
+        System.err.println("The length of the name of the employee which should never be null: " + employee.getName().length());
         // I don't think it matters what we return
         return null;
     }

@@ -25,27 +25,48 @@
   <build>
     <plugins>
       <plugin>
-          <groupId>org.wildfly.plugins</groupId>
-          <artifactId>wildfly-maven-plugin</artifactId>
-          <version>1.2.0.Alpha2</version>
+          <groupId>org.codehaus.cargo</groupId>
+          <artifactId>cargo-maven2-plugin</artifactId>
+          <version>1.4.15</version>
           <executions>
-                    <execution>
-                        <id>start-wildfly</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>start</goal>
-                            <goal>deploy</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>stop-wildfly</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>shutdown</goal>
-                        </goals>
-                    </execution>
-
-                </executions>
+            <execution>
+                <id>start-wildfly</id>
+                <phase>pre-integration-test</phase>
+                <goals>
+                    <goal>start</goal>
+                </goals>
+                <configuration>
+                   <wait>false</wait>
+                   <!-- If this is not here, the container will just stop itself before the tests can run. -->
+                </configuration>
+            </execution>
+            <execution>
+                <id>stop-wildfly</id>
+                <phase>post-integration-test</phase>
+                <goals>
+                    <goal>stop</goal>
+                </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <container>
+              <containerId>wildfly9x</containerId>
+              <artifactInstaller>
+                <groupId>org.wildfly</groupId>
+                <artifactId>wildfly-dist</artifactId>
+                <version>10.0.0.Final</version>
+              </artifactInstaller>
+            </container>
+            <deployables>
+              <deployable>
+                <groupId>org.wildfly.swarm.examples</groupId>
+                <artifactId>example-jaxrs-cdi</artifactId>
+                <type>war</type>
+                <pingURL>http://localhost:8080/example-jaxrs-cdi/employees</pingURL>
+                <pingTimeout>30000</pingTimeout>
+              </deployable>
+            </deployables>
+          </configuration>
       </plugin>
     </plugins>
   </build>
