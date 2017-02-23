@@ -5,6 +5,7 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -16,18 +17,23 @@ import org.wildfly.swarm.examples.jaxrs.cdi.domain.service.EmployeeService;
  * @author Yoshimasa Tanabe
  */
 @ApplicationScoped
-@Path("/employees")
-public class EmployeeController {
+public class EmployeeController implements IEmployeeController {
 
     @Inject
     private EmployeeService employeeService;
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
     public List<Employee> findAll() {
         List<Employee> results = employeeService.findAll();
         System.err.println(results);
         return results;
     }
 
+    public Employee postEmployee(final Employee employee) {
+        // We declare name as NotNull so it should not be possible to get here
+        if (employee.getName() == null) {
+            System.err.println("The name of the employee which should never be null: " + employee.getName());
+        }
+        // I don't think it matters what we return
+        return null;
+    }
 }
